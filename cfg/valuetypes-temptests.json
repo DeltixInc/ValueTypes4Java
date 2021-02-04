@@ -1,0 +1,70 @@
+{
+	"logEveryClass"         : false,
+	"ignoreByDefault"		: false,
+	"verifyAllMethods"		: false,
+	"logAllMethods"         : false,
+	"logSuccesses"          : true,
+	"extraVerification"     : true,
+	"skipDebugData" : true,
+	"deleteAllDebugData" : false,
+
+
+	"logClasses" : [
+		"-deltix/vtype/TemporaryTests"
+	],
+
+	"logMethods"	: [
+		"-deltix/vtype/TemporaryTests.<clinit>",
+		"-deltix/vtype/TemporaryTests.<init>"
+	],
+
+	"autoMethods"	: [
+		"[LValueType; java.util.Arrays.copyOf([LValueType;I)",
+		"[LValueType; java/util/Arrays.copyOf([LValueType;ILjava/lang/Class;)",
+		"[LValueType; java.util.Arrays.copyOfRange([LValueType;II)",
+		"Z java.util.Arrays.equals([LValueType;[LValueType;)",
+		"V deltix/util/collections/SafeArrays.safeArrayCopy([LValueType;I[LValueType;II)",
+		"J deltix.util.memory.EstimatorUtils.getSizeInMemory([LValueType;)"
+	],
+
+	"-forceWarnings" : [ "newArray" ],
+	"ignoreWarnings" : [ "newArray" ],
+
+	"mappings" :
+	[
+		{
+			"name"			: "deltix.dt.DateTime",
+			"implementation": "deltix.dt.Utils",
+			"box"			: "deltix.dt.DateTime  deltix.dt.DateTime.create(J)",
+			"unbox"			: "J deltix.dt.DateTime.getLong(Ldeltix/dt/DateTime;)",
+			"boxArray"		: "[Ldeltix/dt/DateTime; deltix/dt/DateTime.fromLongArray([J)",
+			"unboxArray"	: "[J deltix/dt/DateTime.toLongArray([Ldeltix/dt/DateTime;)",
+			"isNull"		: "Z deltix.dt.Utils.getLong(J)"
+		}
+		,
+		{
+			"name" 			: "deltix/dfp/Decimal64",
+			"implementation": "deltix/decimal_wrapper/Decimal64UtilsWrapper2",
+			"-implementation": "deltix/dfp/Decimal64Utils",
+
+			"box"			: "deltix/dfp/Decimal64 deltix/dfp/Decimal64.fromUnderlying(J)",
+			"unbox"			: "J deltix/dfp/Decimal64.toUnderlying(Ldeltix/dfp/Decimal64;)",
+
+			"boxArray"		: "[Ldeltix/dfp/Decimal64; deltix/decimal_wrapper/Decimal64UtilsWrapper2.fromUnderlyingLongArray([J)",
+			"unboxArray"	: "[J deltix/decimal_wrapper/Decimal64UtilsWrapper2.toUnderlyingLongArray([Ldeltix/dfp/Decimal64;)",
+
+			"methodSuffix"  : "Checked",
+			"staticMethodSuffix"  : ""
+		}
+	],
+
+	"-mappings" :
+	[
+		{
+			"name" 			: "deltix/vtype/ValueType64",
+			"implementation": "deltix/vtype/ValueType64Utils",
+			"box"			: "deltix/vtype/ValueType64 deltix/vtype/ValueType64.fromValue(J)",
+			"unbox"			: "J deltix/vtype/ValueType64.getValue(Ldeltix/vtype/ValueType64;)"
+		}
+	]
+}

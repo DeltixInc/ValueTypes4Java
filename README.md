@@ -9,7 +9,7 @@ Transformed classes operate in a way similar to C# structs, but somewhat limited
 Warnings are generated if any redundant operations are generated during code translation, usually to support automatic boxing/unboxing in a multitude of contexts. Warnings try to dive a detailed description of the problem and offer the advice about how it may be avoided.
 If the advice given in the warnings is followed, the generated code will be mostly the same as the manually written code that operates on `long`s. User should not expect Value Types to operate efficiently with Generic collections or with Java reflection facilities.
 
-Current version of the Value Type Agent (0.9.2+) is considered to be in beta stage. It performs the work it is intended to do, but some corners were cut, significant amount of cruft has accumulated during the experimental phase of the development.
+Current version of the Value Type Agent (0.9.0+) is considered to be in beta stage. It performs the work it is intended to do, but some corners were cut, significant amount of cruft has accumulated during the experimental phase of the development.
 ASM framework is used to perform the code transformation. Efforts were made to ensure that class loading is not significantly slowed down by the VT Agent and the amount of generated garbage is reduced, but many optimization opportunities still remain.
 
 ### Installing and using the ValueType agent
@@ -17,7 +17,7 @@ ASM framework is used to perform the code transformation. Efforts were made to e
 
 ###### Add agent jar and the JSON config file path to JVM options
 
-`-javaagent:java/build/libs/deltix-vtype-0.9.1.jar=cfg/valuetypes.json`
+`-javaagent:java/build/libs/deltix-value-types-0.9.0.jar=cfg/valuetypes.json`
 
 Example configuration files are supplied with the project as reference.
 
@@ -106,12 +106,12 @@ Value Type Agent
 
 ### Version history:
 
-* V0.9.2 OSS
+* V0.9.0
   - Upgraded to use ASM 7.2.
   - Builds and tests with Java 11. Java 7 support remains, but needs Java 8+ to compile.
   - No substantial transformation code changes since 0.8.18 (yet)
   - Tests improved
-* V0.9.1 OSS
+* V0.8.18
   - will not try to transform already transformed class if a (broken?)classloader sends it again
   - Better support for using 2 or more different Value Types in same method signature
   - Method name suffixes not added to methods whose implementation names were overridden with `@ValueType(impl="XX")`
@@ -120,9 +120,102 @@ Value Type Agent
   - All instance methods that start with "set" followed by uppercase letter, take exactly 1 ValueType/VT array and return _anything_ are considered setters and are not renamed
   - In the case of transformed setter signature collision with setter that takes long/long array, first found method takes priority.
   - Warning is displayed when setter name collision occurs and redundant setter is deleted.
-  - Bugfixes in local variable frame tracking
+* V0.8.17
   - Bugfixes for Java 8 lambdas.
-  - Cleanup
+* V0.8.9
+  - Many changes to reused objects, created during translation and reduce GC pressure.
+  - Internal reorganisation and cleanup
+  - Removal of dependencies from other deltix projects and repositories. Stub implementation of deltix.dfp, for tests.
+  - Updated documentation
 
-* V0.9 OSS
-  - Released as Open Source project under Apache 2.0 license
+* V0.8.8
+  - binary logging of transformed classes possible for reference or debugging
+  - improved handling of Object methods(no unnecessary boxing in some specific cases)
+  - frame transformation warnings
+  - few tests for the above features
+  - Lambda support improved. Value Type can be captured and passed in arguments
+* V0.8.7
+  - Added preliminary support for INVOKEDYNAMIC and Java 8 lambdas. Will issue a warning if ValueType is used in a lambda
+* V0.8.6
+  - Can use dot in simple JSON config classpaths for easier editing
+  - Stricter type conversion checks
+  - Updated 3rd party lib dependencies
+  - Internal code cleanup
+* V0.8.5
+  - Bugfixes for ValueType field initialization to ValueType-specific NULL constant
+* V0.8.4
+  - Bugfixes related to ValueType array boxing/unboxing/typecasting
+  - Improved logging and documentation
+* V0.8.3
+  - Updated equality check methods for Decimals 6.7
+  - Started real version tracking in gradle.properties
+  - Additional documentation
+* V0.8.2
+  - Compatibility updates for Decimals 6.5+
+  - Improved logging, updated tests, cleanup
+* V0.8.1
+  - Regression fixes in STORE/IF/CHECKCAST opcode implementation
+  - Improved logging facilities, tests, documentation
+* V0.8
+  - Release with reimplemented variable version tracking
+* V0.7
+  - Working Beta-version release
+* V0.6.9
+  - Added VType field initialization with correct null constant instead of 0
+* V0.6.8
+  - Fixed bugs caused by ASM COMPUTE_FRAMES feature. Frames are now modified by the VT agent itself without ASM help
+  - Multiple refactorings and optimizations
+* V0.6.7
+  - Added support for Additional verification of generated code via ASM CheckClassAdapter
+  - Additional options in config file (logClasses [], ignoreClasses[], extraVerification)
+  - ValueType class fields are not renamed anymore, now only methods are renamed with $VT$XXXX suffix
+* V0.6.6
+  - Bugfix: Support for relatively rare case of constructor calls split by jump labels ('uninitialized reference' type)
+  - Some debug options added
+* V0.6.5
+  - Now able to transform variable frame information to allow debugging of transformed code
+  - Last major fixes in the implementation of return instruction, reference comparison, transformation of uninitialized 64-bit types etc.
+* V0.6.4
+  - More instruction bugfixes, stricter sanity checks and more tests
+* V0.6.3
+  - Bugfixed some instructions, instanceof etc
+  - Unit tests for Stack VM implementation class
+  - Additional debug options in config file (LogMethods [], logSuccesses)
+* V0.6.1
+  - Reimplemented and improved stack frame transformation, arbitrary code complexity supported, Value Type variables can be uninitialized, but this may cause extra boxing
+  - More debug information generated on failure, including line numbers
+* V0.6
+  - VT classes now need to implement isNull() for correct implementation of reference/value comparisons
+  - Code transformation improved
+  - to correctly merge local variable frame info between several execution paths
+* V0.5.2
+  - Correct support for equals()
+  - bugfixes
+* V0.5.1
+  - Support for instructions that weren't previously transformed or were transformed incorrectly
+  - Integrated many junit tests
+* V0.5
+  - Initial implementation of the method that doesn't use debug information (local variable list)
+* V0.4.1
+  - Bugfixes
+* V0.4
+  - Will try to transform all loaded classes by default
+  - Added several global configuration parameters that control logging and transformation scope
+  - No array depth restrictions. Bugfixes in array & class field support(partially caused by ASM update?)
+  - Support for transformed array methods, such as .clone()
+  - No restriction on the number of boxed/unboxed arguments in method calls
+  - Stack Frame processing improves support for branching code
+  - Method calls of arbitrary classes are transformed, arguments and return types are converted
+* V0.3
+  - JSON configuration supported with automatic mapping of methods source and implementation classes
+  - Some annotations supported for choosing the name of method
+  - implementation, setting its properties and for debugging. Some previously omitted opcodes are added
+  - Array support improved, multidimensional arrays can still remain uninitialized
+  - put into class fields
+* V0.2
+  - Class fields are transformed, can save and load ValueType objects into fields
+  - Arrays of value types are transformed
+  - All method calls are transformed, though methods themselves are not
+* V0.1
+  - Simple code sequences work. Objects can be created via static constructors, some static and dynamic methods work. Can be printed via .toString()
+  - Usage: Run "Test" task to convert class into value type, or run "Test - no replacement" to execute test code without object->value conversion

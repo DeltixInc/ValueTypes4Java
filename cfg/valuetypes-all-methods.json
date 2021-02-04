@@ -1,0 +1,65 @@
+{
+	"mappings" :
+	[
+		{
+			"name"			: "deltix/dt/DateTime",
+			"implementation": "deltix/dt/Utils",
+			"box"			: "deltix/dt/DateTime deltix/dt/DateTime.create(J)",
+			"unbox"			: "J deltix/dt/DateTime.getLong()",
+			"methods":
+			[
+				{
+					"static": 1,
+					"from"	:  "deltix/dt/DateTime create(J)",
+					"to"	:  "J identity(J)"
+				},
+				{
+					"static": 0,
+					"from"	:  "J getLong()",
+					"to"	:  "J identity(J)"
+				},
+				{
+					"static": 1,
+					"from"	:  "deltix/dt/DateTime now()",
+					"to"	:  "J now()"
+				},
+				{
+					"static": 0,
+					"from"	:  "java/lang/String toString()",
+					"to"	:  "java/lang/String toString(J)"
+				},
+				{
+					"static": 0,
+					"commutative": 1,
+					"from":  "deltix/dt/DateTime addNanos(J)",
+					"to":  "J addNanos(JJ)"
+				}
+
+			]
+		},
+		{
+			"name" 			: "deltix/vtype/ValueType64",
+			"implementation": "deltix/vtype/ValueType64Utils",
+			"box"			: "deltix/vtype/ValueType64 deltix/vtype/ValueType64.fromValue(J)",
+			"unbox"			: "J deltix/vtype/ValueType64.getValue()",
+			"methods":
+			[
+				{
+					"static": 1,
+					"from"	:  "deltix/vtype/ValueType64 fromValue(J)",
+					"to"	:  "J identity(J)"
+				},
+				{
+					"static": 0,
+					"from"	:  "J getValue()",
+					"to"	:  "J identity(J)"
+				},
+				{
+					"static": 0,
+					"from"	:  "java/lang/String toString()",
+					"to"	:  "java/lang/String toString(J)"
+				}
+			]
+		}
+	]
+}

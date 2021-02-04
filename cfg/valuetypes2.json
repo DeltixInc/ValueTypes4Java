@@ -1,0 +1,32 @@
+{
+	"logEveryClass"         : false,
+	"ignoreByDefault"		: false,
+    "verifyAllMethods"		: false,
+    "logAllMethods"         : false,
+	"extraVerification"     : true,
+
+	"mappings" :
+	[
+		{
+			"name"			: "deltix/dt/DateTime",
+			"implementation": "deltix/dt/Utils",
+			"box"			: "deltix/dt/DateTime deltix/dt/DateTime.create(J)",
+			"unbox"			: "J deltix/dt/DateTime.getLong(Ldeltix/dt/DateTime;)",
+			"boxArray"		: "[Ldeltix/dt/DateTime; deltix/dt/DateTime.fromLongArray([J)",
+			"unboxArray"	: "[J deltix/dt/DateTime.toLongArray([Ldeltix/dt/DateTime;)"
+		},
+		{
+			"name" 			: "deltix/vtype/ValueType64",
+			"implementation": "deltix/vtype/ValueType64Utils",
+			"box"			: "deltix/vtype/ValueType64 deltix/vtype/ValueType64.fromValue(J)",
+			"unbox"			: "J deltix/vtype/ValueType64.getValue(Ldeltix/vtype/ValueType64;)"
+		},
+		{
+			"name" 			: "deltix/dfp/Decimal64",
+			"implementation": "deltix/decimal_wrapper/Decimal64UtilsWrapper",
+			"box"			: "deltix/dfp/Decimal64 deltix/dfp/Decimal64.fromUnderlying(J)",
+			"unbox"			: "J deltix/dfp/Decimal64.toUnderlying(Ldeltix/dfp/Decimal64;)"
+		}
+
+	]
+}

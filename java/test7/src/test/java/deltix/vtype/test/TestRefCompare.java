@@ -106,7 +106,7 @@ public class TestRefCompare {
     }
 
     @Test
-    @ValueTypeSuppressWarnings({"refValueCompare", "refArgs", "frameSyncUnboxing", "frameSyncBoxing"})
+    @ValueTypeSuppressWarnings({"refValueCompare", "refArs", "frameSyncUnboxing", "frameSyncBoxing"})
     public void testNullCompare3() throws ParseException {
 
         DateTime a = DateTime.now();

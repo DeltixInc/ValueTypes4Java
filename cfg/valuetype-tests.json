@@ -1,18 +1,30 @@
 {
 	"logEveryClass"         : false,
 	"ignoreByDefault"		: false,
+	"verifyAllMethods"		: false,
 	"logAllMethods"         : false,
+	"useQuickScan"          : true,
 	"logSuccesses"          : false,
+	"extraVerification"     : true,
+	"skipDebugData"     	: false,
 	"ignoreWarnings"        : [ "newArray" ],
+	"classDumpPath"         : "../../vt-classes",
 
 	"autoMethods" : [
 		"Ljava/lang/String; java.lang.Object.toString(LValueType;)",
 		"[LValueType; java/util/Arrays.copyOf([LValueType;I)",
 		"[LValueType; java.util.Arrays.copyOf([LValueType;ILjava/lang/Class;)",
 		"[LValueType; java.util.Arrays.copyOfRange([LValueType;II)",
-		"Z java/util/Arrays.equals([LValueType;[LValueType;)"
+		"Z java/util/Arrays.equals([LValueType;[LValueType;)",
+		"V deltix.util.collections.SafeArrays.safeArrayCopy([LValueType;I[LValueType;II)",
+		"V deltix.vtype.unit.SafeArrayCopy.safeArrayCopy([LValueType;I[LValueType;II)",
+		"J deltix.util.memory.EstimatorUtils.getSizeInMemory([LValueType;)"
 	],
 
+	"logClasses" : [
+		"deltix/vtype/unit/MethodCallsAutoMethodsTest",
+		"deltix/vtype/unit/ArrayConversionTest$DummyList"
+	],
 
 	"mappings" :
 	[
@@ -33,12 +45,16 @@
 		{
 			"name" 			: "deltix/dfp/Decimal64",
 			"implementation": "deltix/dfp/Decimal64Utils",
+			"-implementation": "deltix/decimal_wrapper/Decimal64UtilsWrapper2",
 
 			"box"			: "deltix/dfp/Decimal64 deltix/dfp/Decimal64.fromUnderlying(J)",
 			"unbox"			: "J deltix/dfp/Decimal64.toUnderlying(Ldeltix/dfp/Decimal64;)",
 
 			"boxArray"		: "[Ldeltix/dfp/Decimal64; deltix/dfp/Decimal64Utils.fromUnderlyingLongArray([J)",
 			"unboxArray"	: "[J deltix/dfp/Decimal64Utils.toUnderlyingLongArray([Ldeltix/dfp/Decimal64;)",
+
+			"-boxArray"		: "[Ldeltix/dfp/Decimal64; deltix/decimal_wrapper/Decimal64UtilsWrapper2.fromUnderlyingLongArray([J)",
+			"-unboxArray"	: "[J deltix/decimal_wrapper/Decimal64UtilsWrapper2.toUnderlyingLongArray([Ldeltix/dfp/Decimal64;)",
 
 			"methodSuffix"  : "Checked",
 			"staticMethodSuffix"  : ""

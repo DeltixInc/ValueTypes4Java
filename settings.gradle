@@ -18,7 +18,11 @@ include 'java:main'
 include 'java:dfpstub'
 include 'java:test7'
 include 'java:test8'
+include 'java:test7dfp'
+include 'java:test8dfp'
 include 'java:test11'
+include 'java:test11dfp'
+
 
 project(':java:main').name = 'deltix-value-types'
 
@@ -26,3 +30,9 @@ project(':java:dfpstub').name = 'deltix-dfp-stub'
 project(':java:test7').name = 'deltix-value-types-test7'
 project(':java:test8').name = 'deltix-value-types-test8'
 project(':java:test11').name = 'deltix-value-types-test11'
+
+project(':java:test7dfp').name = 'deltix-value-types-test7-dfp'
+project(':java:test8dfp').name = 'deltix-value-types-test8-dfp'
+project(':java:test11dfp').name = 'deltix-value-types-test11-dfp'
+
+
