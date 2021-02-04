@@ -1,13 +1,11 @@
-name: Release CI
+name: Test CI
 
 on:
   - pull_request
-  - push
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux]
     steps:
-      - env:
-          SUPER_SECRET: ${{ secrets.TEST }}
-        run: |
-          echo "$SUPER_SECRET" | base64
+      - uses: actions/checkout@v2
+      - run: |
+          cat README.md
